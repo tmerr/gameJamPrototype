@@ -12,6 +12,9 @@ DISPLAY = (800, 640)
 DEPTH = 32
 FLAGS = 0
 
+class World(object):
+    pass
+
 # in blocks, 25 x 20
 
 class Scene(object):
