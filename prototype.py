@@ -1,3 +1,4 @@
+#!python3
 # code based off http://www.nandnor.net/?p=64
 
 import pygame
@@ -23,8 +24,8 @@ def main():
     bg.fill(Color("#000000"))
     entities = pygame.sprite.Group()
     
-    swarm = Swarm()
-    #player = Player(32, 32)
+    swarm = Swarm(SimpleAgent)
+    human = Player(32, 32, HumanAgent())
     platforms = []
     
     x = y = 0
@@ -64,7 +65,7 @@ def main():
         y += 32
         x = 0
     
-    #entities.add(player)
+    entities.add(human)
     for guy in swarm.get_guys():
         entities.add(guy)
     
@@ -92,6 +93,8 @@ def main():
                 left = False
             if e.type == KEYUP and e.key == K_RIGHT:
                 right = False
+
+            human.agent.set_decision(MoveDecision(left, right, up, down))
         
         # draw background
         for y in range(20):
@@ -100,7 +103,7 @@ def main():
         
         # update player, draw everything else
         swarm.update(platforms)
-        #player.update(up, down, left, right, platforms)
+        human.update(platforms)
         entities.draw(screen)
         
         pygame.display.flip()
