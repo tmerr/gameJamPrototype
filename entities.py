@@ -10,14 +10,17 @@ class Entity(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
 class Creature(Entity):
-    def __init__(self, x, y, agent, surface):
+    def __init__(self, x, y, agent, surface, rect = None):
         Entity.__init__(self)
         self.agent = agent
         self.xvel = 0
         self.yvel = 0
         self.on_ground = False
         self.image = surface
-        self.rect = Rect(x, y, 32, 32)
+        if rect is None:
+            self.rect = Rect(x, y, surface.get_width(), surface.get_height())
+        else:
+            self.rect = rect
 
     def update(self, platforms):
         decision = self.agent.decide_move(self, platforms)
