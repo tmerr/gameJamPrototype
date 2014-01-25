@@ -6,7 +6,7 @@ Level1 = [
         "P       P               P",
         "P  P      P   PPPP      P",
         "P  PP     P   P         P",
-        "P  PPP    PPP P    PPPPPP",
+        "P  PPP    PPPPP    PPPPPP",
         "P  PPPP       P         P",
         "P  PPPPPP               P",
         "P  PPPPPPPPPP PPPPPPPPPPP",

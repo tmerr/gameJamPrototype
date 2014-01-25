@@ -125,7 +125,7 @@ class Scene(object):
 
 def main():
     scene = Scene()
-    scene.load_level(Maps.Level1)
+    scene.load_level(Maps.Level2)
     #scene.enable_human()
     scene.main_loop()
 
