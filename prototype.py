@@ -22,6 +22,8 @@ class Scene(object):
         self.bg.convert()
         self.bg.fill(Color("#000000"))
 
+        self.level_width = None
+        self.level_height = None
         self.platforms = []
         self.creatures = []
         self.entities = pygame.sprite.Group()
@@ -29,8 +31,11 @@ class Scene(object):
         self.human = None
 
     def load_level(self, level):
+        self.level_width = len(level[0])
+        self.level_height = len(level)
         x = y = 0
         for row in level:
+            assert len(row) == self.level_width
             for col in row:
                 if col == "P":
                     platform = Platform(x, y)
@@ -95,8 +100,8 @@ class Scene(object):
             self.draw()
 
     def draw(self):
-        for y in range(20):
-            for x in range(25):
+        for y in range(self.level_height):
+            for x in range(self.level_width):
                 self.screen.blit(self.bg, (x*32, y*32))
         self.entities.draw(self.screen)
         pygame.display.flip()
