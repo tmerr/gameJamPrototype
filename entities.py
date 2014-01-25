@@ -75,17 +75,26 @@ class ExitBlock(Platform):
         self.image.fill(Color("#0033FF"))
 
 
-class Swarm(Entity):
+class Swarm(object):
     def __init__(self):
         self.guys = []
-        #self.guys.append()
+        for y in range(32, 320, 32):
+            self.guys.append(Guy(32, y))
 
     def update(self, platforms):
-        pass
+        for guy in self.guys:
+            guy.update(platforms)
 
     def get_guys(self):
         return self.guys
 
 class Guy(Entity):
     def __init__(self, x, y):
-        pass
+        Entity.__init__(self)
+        self.player = Player(x, y)
+        self.image = self.player.image
+        self.rect = self.player.rect
+
+    def update(self, platforms):
+        up, down, left, right = True, False, False, True
+        self.player.update(up, down, left, right, platforms)
