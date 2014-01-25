@@ -5,6 +5,8 @@ import pygame
 import math
 from pygame import *
 from entities import *
+from agents import *
+import surfaces
 
 DISPLAY = (800, 640)
 DEPTH = 32
@@ -63,7 +65,7 @@ class Scene(object):
 
     def enable_human(self):
         if self.human == None:
-            self.human = Creature(32, 32, HumanAgent())
+            self.human = Creature(32, 32, HumanAgent(), surfaces.random_solid())
             self.add_creature(self.human)
 
     def main_loop(self):
@@ -78,6 +80,9 @@ class Scene(object):
                     raise(SystemExit)
                 if e.type == KEYDOWN and e.key == K_UP:
                     up = True
+                if e.type == KEYDOWN and e.key == K_q:
+                    c = Creature(32, 32, SimpleAgent(), surfaces.random_solid())
+                    self.add_creature(c)
                 if e.type == KEYDOWN and e.key == K_DOWN:
                     down = True
                 if e.type == KEYDOWN and e.key == K_LEFT:
@@ -133,9 +138,6 @@ def main():
         "P      PPPP   PE        P",
         "PPPPPPPPPPPPPPPPPPPPPPPPP",
     ])
-    s = Swarm(SimpleAgent)
-    for guy in s.get_guys():
-        scene.add_creature(guy)
     scene.enable_human()
     scene.main_loop()
 
