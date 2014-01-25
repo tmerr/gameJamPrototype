@@ -3,8 +3,6 @@
 import pygame
 import math
 from pygame import *
-from agents import *
-from bodies import *
 from collections import namedtuple
 import actions
 
