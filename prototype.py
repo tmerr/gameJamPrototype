@@ -50,9 +50,12 @@ class Scene(object):
             x = 0
 
     def clear_level(self):
+        self.level_width = None
+        self.level_height = None
         self.platforms = []
         self.creatures = []
         self.entities = pygame.sprite.Group()
+        self.human = None
 
     def add_creature(self, entity):
         self.entities.add(entity)
