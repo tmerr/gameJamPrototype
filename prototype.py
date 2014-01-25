@@ -6,6 +6,7 @@ import math
 from pygame import *
 from entities import *
 from agents import *
+from bodies import *
 import surfaces
 
 DISPLAY = (800, 640)
@@ -65,7 +66,7 @@ class Scene(object):
 
     def enable_human(self):
         if self.human == None:
-            self.human = Creature(32, 32, HumanAgent(), surfaces.random_solid())
+            self.human = Creature(32, 32, HumanAgent(), JumperBody(), surfaces.random_solid())
             self.add_creature(self.human)
 
     def main_loop(self):
@@ -81,7 +82,10 @@ class Scene(object):
                 if e.type == KEYDOWN and e.key == K_UP:
                     up = True
                 if e.type == KEYDOWN and e.key == K_q:
-                    c = Creature(32, 32, SimpleAgent(), surfaces.random_solid())
+                    c = Creature(32, 32, SimpleAgent(), JumperBody(), surfaces.random_solid())
+                    self.add_creature(c)
+                if e.type == KEYDOWN and e.key == K_w:
+                    c = Creature(32, 32, SimpleAgent(), WalkerBody(), surfaces.random_solid())
                     self.add_creature(c)
                 if e.type == KEYDOWN and e.key == K_DOWN:
                     down = True
