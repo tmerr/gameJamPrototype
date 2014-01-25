@@ -5,8 +5,7 @@ import pygame
 import math
 from pygame import *
 from entities import *
-from agents import *
-from bodies import *
+from brain import *
 import surfaces
 
 DISPLAY = (800, 640)
@@ -82,11 +81,12 @@ class Scene(object):
                 if e.type == KEYDOWN and e.key == K_UP:
                     up = True
                 if e.type == KEYDOWN and e.key == K_q:
-                    c = Creature(32, 32, SimpleAgent(), JumperBody(), surfaces.random_solid())
+                    metrics = Metrics(Rect(32, 32, 32, 32), 0, 0)
+                    stats = Metrics(None, None, None)
+                    c = Creature(metrics, stats, PooBrain(), surfaces.random_solid())
                     self.add_creature(c)
                 if e.type == KEYDOWN and e.key == K_w:
-                    c = Creature(32, 32, SimpleAgent(), WalkerBody(), surfaces.random_solid())
-                    self.add_creature(c)
+                    pass
                 if e.type == KEYDOWN and e.key == K_DOWN:
                     down = True
                 if e.type == KEYDOWN and e.key == K_LEFT:
@@ -142,7 +142,7 @@ def main():
         "P      PPPP   PE        P",
         "PPPPPPPPPPPPPPPPPPPPPPPPP",
     ])
-    scene.enable_human()
+    #scene.enable_human()
     scene.main_loop()
 
 if(__name__ == "__main__"):

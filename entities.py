@@ -5,27 +5,41 @@ import math
 from pygame import *
 from agents import *
 from bodies import *
+from collections import namedtuple
+import actions
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
-class Creature(Entity):
-    def __init__(self, x, y, agent, body, surface, rect = None):
-        Entity.__init__(self)
-        self.agent = agent
-        self.image = surface
-        if rect is None:
-            self.rect = Rect(x, y, surface.get_width(), surface.get_height())
-        else:
-            self.rect = rect
+class Metrics(object):
+    def __init__(self, rect, xvel, yvel):
+        self.rect = rect
+        self.xvel = xvel
+        self.yvel = yvel
 
-        self.body = body
-        self.body.set_rect(self.rect)
+class Stats(object):
+    def __init__(self, weight, jump_velocity, odor):
+        self.weight = weight
+        self.jump_velocity = jump_velocity
+        self.odor = odor
+
+class Creature(Entity):
+    def __init__(self, metrics, stats, brain, surface):
+        Entity.__init__(self)
+        self.metrics = metrics
+        self.stats = stats
+        self.brain = brain
+        self.image = surface
+        self.rect = metrics.rect
+
+        # Default rect value?
+        # self.rect = Rect(x, y, surface.get_width(), surface.get_height())
 
     def update(self, platforms):
-        decision = self.agent.decide_move(self.body, platforms)
-        self.body.act(decision, platforms)
+        action = self.brain.choose_action(self.metrics, self.stats, platforms)
+        action(self.metrics, self.stats, platforms)
+        actions.gravity(self.metrics, self.stats, platforms)
 
 class Platform(Entity):
     def __init__(self, x, y):
