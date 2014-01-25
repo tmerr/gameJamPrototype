@@ -6,7 +6,9 @@ import math
 from pygame import *
 from entities import *
 from brain import *
+import Maps
 import surfaces
+
 
 DISPLAY = (800, 640)
 DEPTH = 32
@@ -123,28 +125,7 @@ class Scene(object):
 
 def main():
     scene = Scene()
-    scene.load_level([
-        "PPPPPPPPPPPPPPPPPPPPPPPPP",
-        "P  P                    P",
-        "P  PPPPPP               P",
-        "P  P     P    P         P",
-        "P  P      P   P         P",
-        "P  P       P  P         P",
-        "P  P         PP    PPPPPP",
-        "P  P        P P         P",
-        "P  P       P  P         P",
-        "P  P      P   PPPPPP    P",
-        "P  P     P    PP        P",
-        "P  P PP       PPP      PP",
-        "P  PPPPP      PPPP    PPP",
-        "P       P     PPPPP  PPPP",
-        "P        PP   P         P",
-        "P            PP         P",
-        "P          PP P         P",
-        "P       PP    P         P",
-        "P      PPPP   PE        P",
-        "PPPPPPPPPPPPPPPPPPPPPPPPP",
-    ])
+    scene.load_level(Maps.Level1)
     #scene.enable_human()
     scene.main_loop()
 
