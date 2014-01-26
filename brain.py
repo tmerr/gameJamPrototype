@@ -11,7 +11,7 @@ class PooBrain(Brain):
         self.moving_right = True # or left
 
     def choose_action(self, metrics, stats, world):
-        howfar = 1
+        howfar = 2
         x, y = metrics.rect.x, metrics.rect.y
         left_shift = type('obj', (object,), {'rect': Rect(x - howfar, y, 32, 32)})
         right_shift = type('obj', (object,), {'rect': Rect(x + howfar, y, 32, 32)})

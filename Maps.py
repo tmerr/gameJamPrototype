@@ -1,3 +1,10 @@
+flatland = [
+    "P                 P",
+    "P                 P",
+    "P                 P",
+    "P                 P",
+    "PPPPPPPPPPPPPPPPPPP"
+]
 
 Level1 = [
         "PPPPPPPPPPPPPPPPPPPPPPPPP",

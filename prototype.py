@@ -76,7 +76,7 @@ class Scene(object):
                     up = True
                 if e.type == KEYDOWN and e.key == K_q:
                     metrics = Metrics(Rect(32, 32, 32, 32), 0, 0)
-                    stats = Metrics(None, None, None)
+                    stats = Stats(None, None, None)
                     c = Creature(metrics, stats, PooBrain(), surfaces.random_solid())
                     self.add_creature(c)
                 if e.type == KEYDOWN and e.key == K_w:
@@ -112,7 +112,7 @@ class Scene(object):
 
 def main():
     scene = Scene()
-    scene.load_level(Maps.Level2)
+    scene.load_level(Maps.flatland)
     #scene.enable_human()
     scene.main_loop()
 
