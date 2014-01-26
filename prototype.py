@@ -13,8 +13,11 @@ DEPTH = 32
 FLAGS = 0
 
 class World(object):
-    pass
-
+    """A container for the entities in the world"""
+    def __init__(self):
+        self.platforms = pygame.sprite.Group()
+        self.creatures = pygame.sprite.Group()
+    
 # in blocks, 25 x 20
 
 class Scene(object):
@@ -29,11 +32,7 @@ class Scene(object):
 
         self.level_width = None
         self.level_height = None
-        self.platforms = []
-        self.creatures = []
-        self.entities = pygame.sprite.Group()
-
-        self.human = None
+        self.world = World()
 
     def load_level(self, level):
         self.level_width = len(level[0])
@@ -44,12 +43,10 @@ class Scene(object):
             for col in row:
                 if col == "P":
                     platform = Platform(x, y)
-                    self.platforms.append(platform)
-                    self.entities.add(platform)
+                    self.world.platforms.add(platform)
                 if col == "E":
                     exit = ExitBlock(x, y)
-                    self.platforms.append(exit)
-                    self.entities.add(exit)
+                    self.world.platforms.add(exit)
                 x += 32
             y += 32
             x = 0
@@ -57,19 +54,11 @@ class Scene(object):
     def clear_level(self):
         self.level_width = None
         self.level_height = None
-        self.platforms = []
-        self.creatures = []
-        self.entities = pygame.sprite.Group()
-        self.human = None
+        self.world.platforms.empty()
+        self.world.creatures.empty()
 
     def add_creature(self, entity):
-        self.entities.add(entity)
-        self.creatures.append(entity)
-
-    def enable_human(self):
-        if self.human == None:
-            self.human = Creature(32, 32, HumanAgent(), JumperBody(), surfaces.random_solid())
-            self.add_creature(self.human)
+        self.world.creatures.add(entity)
 
     def main_loop(self):
         timer = time.Clock()
@@ -106,11 +95,8 @@ class Scene(object):
                 if e.type == KEYUP and e.key == K_RIGHT:
                     right = False
 
-            if not self.human is None:
-                self.human.agent.set_decision(MoveDecision(left, right, up, down))
-
-            for creature in self.creatures:
-                creature.update(self.platforms)
+            self.world.platforms.update()
+            self.world.creatures.update(self.world)
     
             self.draw()
 
@@ -118,7 +104,8 @@ class Scene(object):
         for y in range(self.level_height):
             for x in range(self.level_width):
                 self.screen.blit(self.bg, (x*32, y*32))
-        self.entities.draw(self.screen)
+        self.world.platforms.draw(self.screen)
+        self.world.creatures.draw(self.screen)
         pygame.display.flip()
 
 def main():

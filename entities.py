@@ -34,10 +34,10 @@ class Creature(Entity):
         # Default rect value?
         # self.rect = Rect(x, y, surface.get_width(), surface.get_height())
 
-    def update(self, platforms):
-        action = self.brain.choose_action(self.metrics, self.stats, platforms)
-        action(self.metrics, self.stats, platforms)
-        actions.gravity(self.metrics, self.stats, platforms)
+    def update(self, world):
+        action = self.brain.choose_action(self.metrics, self.stats, world)
+        action(self.metrics, self.stats, world)
+        actions.gravity(self.metrics, self.stats, world)
 
 class Platform(Entity):
     def __init__(self, x, y):
